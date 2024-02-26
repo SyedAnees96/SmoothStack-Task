@@ -1,0 +1,82 @@
+<template>
+    <lightning-card title="Exchange Rate Tab" icon-name="standard:currency_exchange">
+        <lightning-input type="date" label="Select Date" onchange={handleDateChange}></lightning-input>
+        
+        <lightning-dual-listbox name="languages"
+                            label="Select Languages"
+                            source-label="Available"
+                            selected-label="Selected"
+                            field-level-help="Select your preferred languages"
+                            options={options}
+                            onchange={handleChange}></lightning-dual-listbox>
+    <div class="slds-box" >
+        <p>Selected values are: {selected}</p>
+    </div>
+        <lightning-button label="Get Exchange Rates" onclick={getExchangeRates} variant="brand"></lightning-button>
+        <lightning-card title="Exchange Rate Tab" icon-name="standard:currency_exchange">
+        
+            <template if:true={results}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered container">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Date">Date</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Currency">Currency</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Value">Value</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={results} for:item="rate">
+                            <tr key={rate.currency}>
+                                <td>
+                                    <div class="slds-truncate" title={rate.date}>{rate.date}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title={rate.currency}>{rate.currency}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title={rate.value}>{rate.value}</div>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+
+    </lightning-card>
+    </lightning-card>
+
+    
+        <lightning-card title="Custom Contac Search">
+            <lightning-layout multiple-rows="true" vertical-align="end">
+                <lightning-layout-item size="4" padding="around-small">
+                     <!--Input text to Search Account-->
+                    <lightning-input type="text" label="Enter Contact Name To Search"
+                        value={searchKey} 
+                        onchange={handelSearchKey}> 
+                    </lightning-input>
+                </lightning-layout-item >
+    
+                <lightning-layout-item size="2" padding="around-small">
+                    <!--Search Button-->
+                    <lightning-button label="Search" variant="brand" onclick={SearchAccountHandler}>
+    
+                    </lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small">
+                    
+                    <lightning-datatable key-field="id" data={accounts} columns ={cols}> 
+    
+                    </lightning-datatable>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-card>
+        <lightning-button label="SendPDF" variant="brand" onclick={sendPdf}>
+    
+        </lightning-button>
+</template>
